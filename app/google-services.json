@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "724691604392",
+    "firebase_url": "https://togather-e825b.firebaseio.com",
+    "project_id": "togather-e825b",
+    "storage_bucket": "togather-e825b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724691604392:android:ec6ef57dc575e1a5",
+        "android_client_info": {
+          "package_name": "com.togather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724691604392-2eflv17lm4cng9if8kd2chors6u7j9b9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.togather",
+            "certificate_hash": "fcdae0eb09dbb3cc61bd77f4ee78ef49fce0f365"
+          }
+        },
+        {
+          "client_id": "724691604392-3vdco6fnsgdjsskq939nbpqjm3f0h89n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjFZ9d98rg05OZRUdDNQh_ItBdSiAc17Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724691604392-3vdco6fnsgdjsskq939nbpqjm3f0h89n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
