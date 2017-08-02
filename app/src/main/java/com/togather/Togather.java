@@ -27,13 +27,11 @@ import java.util.Map;
 
 public class Togather extends Application {
 
-    public static final String TAG = "Togather";
-
     public static FirebaseUser firebaseUser;
     public static FirebaseAuth auth;
     public static FirebaseDatabase database;
     public static DatabaseReference ref;
-    public static User user;
+    public static UserUpdater user;
 
     private static List<String> questions;
 
@@ -41,12 +39,21 @@ public class Togather extends Application {
         return questions;
     }
 
-    public static void getUser() {
-        System.out.println(ref.child("users").child(firebaseUser.getUid()));
-    }
+    public static void addUserListener() {
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                user = new UserUpdater(dataSnapshot.getValue(User.class));
+                System.out.println("user: " + user.getProfile().size());
+            }
 
-    public static void updateLocation(Location location) {
-        ref.child("users").child(firebaseUser.getUid()).child("location").setValue(location);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        ref.child("users").child(firebaseUser.getUid()).addValueEventListener(listener);
     }
 
     public static void addQuestionListener() {
@@ -72,16 +79,9 @@ public class Togather extends Application {
         }
     }
 
-    public static void updateResponse(View question, View response, Integer number) {
-        String choice = ((Spinner) question).getSelectedItem().toString();
-        String answer = ((EditText) response).getText().toString();
-
-        Map<String, String> questionAndAnswer = new HashMap<>();
-        questionAndAnswer.put(choice, answer);
-
-        ref.child("users").child(firebaseUser.getUid()).child("questions").child(number.toString()).setValue(questionAndAnswer);
+    public static void saveUser() {
+        ref.child("users").child(firebaseUser.getUid()).setValue(user);
     }
-
 
     public static void hideKeyboard(Activity activity, View v) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);

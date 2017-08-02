@@ -7,4 +7,7 @@
     <string name="profile">Profile</string>
     <string name="name">Name</string>
     <string name="questions">Questions</string>
+
+    <!-- Action bar strings -->
+    <string name="action_settings">Settings</string>
 </resources>

@@ -2,10 +2,12 @@ package com.togather;
 
 import android.location.Location;
 
-import com.google.firebase.auth.FirebaseUser;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by ander on 2017-07-30.
@@ -14,12 +16,17 @@ import java.util.Map;
 public class User {
 
     private Location location;
-    private FirebaseUser firebaseUser;
     private String name;
-    private Map<String, String> profile = new HashMap<>();
+    private List<Map<String, String>> profile = new ArrayList<>(5);
 
     public User() {
+        System.out.println("PROFILE SIZE: " + this.profile.size());
+    }
 
+    public User(Location location, String name, List<Map<String, String>> profile) {
+        this.location = location;
+        this.name = name;
+        this.profile = profile;
     }
 
     public Location getLocation() {
@@ -30,14 +37,6 @@ public class User {
         this.location = location;
     }
 
-    public FirebaseUser getFirebaseUser() {
-        return firebaseUser;
-    }
-
-    public void setFirebaseUser(FirebaseUser firebaseUser) {
-        this.firebaseUser = firebaseUser;
-    }
-
     public String getName() {
         return name;
     }
@@ -46,11 +45,15 @@ public class User {
         this.name = name;
     }
 
-    public Map<String, String> getProfile() {
+    public List<Map<String, String>> getProfile() {
         return profile;
     }
 
-    public void addToProfile(String question, String answer) {
-        profile.put(question, answer);
+    public void addToProfile(Integer number, String question, String answer) {
+        Map<String, String> response = new HashMap<>();
+        response.put(question, answer);
+        profile.add(number - 1, response);
     }
+
+
 }

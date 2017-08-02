@@ -3,7 +3,6 @@ package com.togather;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,13 +20,14 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import static com.togather.Togather.addQuestionListener;
+import static com.togather.Togather.addUserListener;
 import static com.togather.Togather.auth;
 import static com.togather.Togather.database;
 import static com.togather.Togather.firebaseUser;
 import static com.togather.Togather.ref;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,11 @@ public class LoginActivity extends AppCompatActivity {
         addQuestionListener();
 
         String credentials = getCredentials();
-        String email = credentials.split(";")[0];
-        String password = credentials.split(";")[1];
-        login(email, password);
+        if (!credentials.isEmpty()) {
+            String email = credentials.split(";")[0];
+            String password = credentials.split(";")[1];
+            login(email, password);
+        }
     }
 
     @Override
@@ -55,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         if (firebaseUser == null) {
             return;
         }
+        addUserListener();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -77,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        System.out.println(credentials);
+        System.out.println("Credentials: " + credentials);
         return credentials;
     }
 
@@ -98,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             firebaseUser = auth.getCurrentUser();
+                            addUserListener();
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                         } else {

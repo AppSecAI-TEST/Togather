@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -19,12 +18,13 @@ import java.io.FileOutputStream;
 
 import static com.togather.Togather.auth;
 import static com.togather.Togather.firebaseUser;
+import static com.togather.Togather.user;
 
 /**
  * Created by ander on 2017-07-24.
  */
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends BaseActivity {
 
     public static final String TAG = "SIGNUP_ACTIVITY";
 
@@ -50,6 +50,7 @@ public class SignupActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             firebaseUser = auth.getCurrentUser();
+                            user = new UserUpdater(new User());
                             Intent intent = new Intent(SignupActivity.this, ProfileActivity.class);
                             saveCredentials(email, password);
                             startActivity(intent);

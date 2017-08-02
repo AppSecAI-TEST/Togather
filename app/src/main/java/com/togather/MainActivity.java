@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
@@ -16,9 +15,10 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import static com.togather.Togather.auth;
+import static com.togather.Togather.user;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private FusedLocationProviderClient mFusedLocationClient;
 
@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
                     1);
         }
 
-        updateLocation();
-        System.out.println(auth.getCurrentUser());
+        //updateLocation();
+        System.out.println(user);
     }
 
     @Override
@@ -78,13 +78,23 @@ public class MainActivity extends AppCompatActivity {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
                                 // ...
-                                Togather.updateLocation(location);
+                                user.setLocation(location);
                             }
                         }
                     });
         } catch (SecurityException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateLocation(View view) {
+        updateLocation();
+    }
+
+    public void logout(View view) {
+        auth.signOut();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     public void loadProfile(View view) {
