@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.firebase.geofire.GeoFire;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,9 +32,18 @@ public class Togather extends Application {
     public static FirebaseAuth auth;
     public static FirebaseDatabase database;
     public static DatabaseReference ref;
-    public static UserUpdater user;
+    public static GeoFire geoFire;
+    public static User user;
 
     private static List<String> questions;
+
+    public static void setUp(FirebaseAuth auth, FirebaseDatabase database) {
+        Togather.auth = auth;
+        Togather.database = database;
+        Togather.ref = database.getReference();
+        DatabaseReference ref = database.getReference("locations");
+        Togather.geoFire = new GeoFire(ref);
+    }
 
     public static List<String> getQuestions() {
         return questions;
@@ -43,8 +53,8 @@ public class Togather extends Application {
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                user = new UserUpdater(dataSnapshot.getValue(User.class));
-                System.out.println("user: " + user.getProfile().size());
+                user = dataSnapshot.getValue(User.class);
+                System.out.println("user: " + user.getName());
             }
 
             @Override

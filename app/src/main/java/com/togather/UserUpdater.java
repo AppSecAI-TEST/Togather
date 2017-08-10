@@ -2,6 +2,8 @@ package com.togather;
 
 import android.location.Location;
 
+import com.firebase.geofire.GeoLocation;
+
 import static com.togather.Togather.firebaseUser;
 import static com.togather.Togather.ref;
 
@@ -11,18 +13,18 @@ import static com.togather.Togather.ref;
 
 public class UserUpdater extends User {
 
-    private User user;
+    public User user;
 
     public UserUpdater(User user) {
         this.user = user;
-        ref.child("users").child(firebaseUser.getUid()).setValue(user);
+        //ref.child("users").child(firebaseUser.getUid()).setValue(user);
     }
-
-    public void setLocation(Location location) {
+/*
+    public void setLocation(GeoLocation location) {
         super.setLocation(location);
         ref.child("users").child(firebaseUser.getUid()).child("location").setValue(location);
     }
-
+*/
     public void setName(String name) {
         super.setName(name);
         ref.child("users").child(firebaseUser.getUid()).child("name").setValue(name);

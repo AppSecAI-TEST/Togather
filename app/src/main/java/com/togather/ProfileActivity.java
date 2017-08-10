@@ -73,6 +73,8 @@ public class ProfileActivity extends BaseActivity {
     public void loadSpinner(int id, String question, int number) {
         List<String> spinnerArray = getQuestions();
 
+        System.out.println("Spinner array: " + spinnerArray);
+
         Spinner spinner = (Spinner) findViewById(id);
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
         spinner.setAdapter(spinnerArrayAdapter);

@@ -10,11 +10,14 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import static com.togather.Togather.auth;
+import static com.togather.Togather.firebaseUser;
+import static com.togather.Togather.geoFire;
 import static com.togather.Togather.user;
 
 
@@ -78,7 +81,9 @@ public class MainActivity extends BaseActivity {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
                                 // ...
-                                user.setLocation(location);
+                                GeoLocation geoLocation = new GeoLocation(location.getLatitude(), location.getLongitude());
+                                geoFire.setLocation(firebaseUser.getUid(), geoLocation);
+                                System.out.println("setting geolocation");
                             }
                         }
                     });

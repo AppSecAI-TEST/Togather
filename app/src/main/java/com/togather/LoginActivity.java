@@ -35,9 +35,7 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         TypefaceProvider.registerDefaultIconSets();
 
-        auth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        ref = database.getReference();
+        Togather.setUp(FirebaseAuth.getInstance(), FirebaseDatabase.getInstance());
 
         addQuestionListener();
 
