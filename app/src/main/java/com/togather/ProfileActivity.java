@@ -57,13 +57,13 @@ public class ProfileActivity extends BaseActivity {
             int spinnerId = getResources().getIdentifier(spinnerStringId, "id", getPackageName());
 
             if (user.getProfile().size() > i - 1) {
-                Map<String, String> response = user.getProfile().get(i);
+                Map<String, String> response = user.getProfile().get(i - 1);
                 String question = response.keySet().iterator().next();
                 String answer = response.values().iterator().next();
                 loadQuestion(spinnerId, question, editId, answer, i);
+            } else {
+                loadQuestion(spinnerId, null, editId, null, i);
             }
-
-            loadQuestion(spinnerId, null, editId, null, i);
         }
     }
 

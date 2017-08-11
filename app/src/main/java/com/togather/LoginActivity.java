@@ -72,7 +72,6 @@ public class LoginActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        System.out.println("Credentials: " + credentials);
         return credentials;
     }
 

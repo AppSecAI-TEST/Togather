@@ -38,6 +38,11 @@ public class User {
     public void addToProfile(Integer number, String question, String answer) {
         Map<String, String> response = new HashMap<>();
         response.put(question, answer);
-        profile.add(number - 1, response);
+
+        if (profile.size() < number) {
+            profile.add(number - 1, response);
+        } else {
+            profile.set(number - 1, response);
+        }
     }
 }

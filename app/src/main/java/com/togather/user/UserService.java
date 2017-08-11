@@ -22,7 +22,6 @@ public class UserService {
         ref.child("public").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println("dataSnapshot: " + dataSnapshot.getValue());
                 updateQuestions((List<String>) dataSnapshot.getValue());
             }
 
