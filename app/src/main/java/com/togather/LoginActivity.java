@@ -12,22 +12,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.togather.user.UserService;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import static com.togather.Togather.addQuestionListener;
-import static com.togather.Togather.addUserListener;
-import static com.togather.Togather.auth;
-import static com.togather.Togather.database;
-import static com.togather.Togather.firebaseUser;
-import static com.togather.Togather.ref;
-
 
 public class LoginActivity extends BaseActivity {
+
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +33,7 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         TypefaceProvider.registerDefaultIconSets();
 
-        Togather.setUp(FirebaseAuth.getInstance(), FirebaseDatabase.getInstance());
-
-        addQuestionListener();
+        UserService.addQuestionListener(ref);
 
         String credentials = getCredentials();
         if (!credentials.isEmpty()) {
@@ -51,11 +47,9 @@ public class LoginActivity extends BaseActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        firebaseUser = auth.getCurrentUser();
-        if (firebaseUser == null) {
+        if (auth.getCurrentUser() == null) {
             return;
         }
-        addUserListener();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -98,8 +92,7 @@ public class LoginActivity extends BaseActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            firebaseUser = auth.getCurrentUser();
-                            addUserListener();
+                            UserService.addUserListener(ref, auth.getCurrentUser().getUid());
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                         } else {

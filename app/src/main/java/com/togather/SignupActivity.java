@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,12 +12,9 @@ import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.FileOutputStream;
-
-import static com.togather.Togather.auth;
-import static com.togather.Togather.firebaseUser;
-import static com.togather.Togather.user;
 
 /**
  * Created by ander on 2017-07-24.
@@ -26,7 +22,7 @@ import static com.togather.Togather.user;
 
 public class SignupActivity extends BaseActivity {
 
-    public static final String TAG = "SIGNUP_ACTIVITY";
+    FirebaseAuth auth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +44,11 @@ public class SignupActivity extends BaseActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            firebaseUser = auth.getCurrentUser();
-                            user = new UserUpdater(new User());
                             Intent intent = new Intent(SignupActivity.this, ProfileActivity.class);
                             saveCredentials(email, password);
                             startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(SignupActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
